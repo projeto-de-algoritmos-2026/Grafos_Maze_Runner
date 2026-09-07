@@ -65,8 +65,8 @@ Pré-requisitos: ambiente desktop com suporte a janela gráfica. As fontes **IBM
 Clone o projeto e entre na pasta:
 
 ```bash
-git clone https://github.com/projeto-de-algoritmos-2026/G23_Grafos_PA-26.2.git
-cd G23_Grafos_PA-26.2
+git clone https://github.com/projeto-de-algoritmos-2026/Grafos_Maze_Runner.git
+cd Grafos_Maze_Runner
 ```
 
 ### Windows — PowerShell
@@ -154,7 +154,7 @@ Para experimentar outro mapa, altere `MAZE_SEED` e reinicie o programa. Os custo
 ### Estrutura do projeto
 
 ```text
-G23_Grafos_PA-26.2/
+Grafos_Maze_Runner/
 ├── README.md
 ├── main.py                  # Ponto de entrada
 ├── requirements.txt         # Dependência gráfica
