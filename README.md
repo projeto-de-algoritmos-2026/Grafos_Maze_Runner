@@ -1,24 +1,16 @@
-# Maze Runner — Comparação de Algoritmos de Busca em Grafos
+# Maze Runner
 
-Visualizador de buscas em labirintos com obstáculos e terrenos de diferentes custos, desenvolvido para a disciplina de **Projeto de Algoritmos**.
-
-**Grupo:** 23 · **Período:** 2026.2 · **Conteúdo:** Grafos e caminhos mínimos
+Número da Lista: 23<br>
+Conteúdo da Disciplina: Grafos<br>
 
 ## Alunos
 
-<table>
-  <tr><th>Gabriel Ferreira</th><th>Luiz Henrique Tomaz Moreira</th></tr>
-  <tr>
-    <td align="center"><a href="https://github.com/diangellis"><img src="https://github.com/diangellis.png" width="120" alt="Foto de Gabriel Ferreira no GitHub"></a></td>
-    <td align="center"><a href="https://github.com/luizhtmoreira"><img src="https://github.com/luizhtmoreira.png" width="120" alt="Foto de Luiz Henrique Tomaz Moreira no GitHub"></a></td>
-  </tr>
-  <tr>
-    <td align="center">Matrícula: <strong>242004671</strong><br><a href="https://github.com/diangellis">@diangellis</a></td>
-    <td align="center">Matrícula: <strong>242028735</strong><br><a href="https://github.com/luizhtmoreira">@luizhtmoreira</a></td>
-  </tr>
-</table>
+|Matrícula | Aluno |
+| -- | -- |
+| 242004671 | Gabriel Ferreira |
+| 242028735 | Luiz Henrique Tomaz Moreira |
 
-## Sobre o projeto
+## Sobre
 
 O Maze Runner é uma aplicação gráfica educativa em Python que permite acompanhar como diferentes algoritmos resolvem um labirinto. O usuário escolhe uma busca e observa os nós explorados, a fronteira de busca e o caminho encontrado entre a entrada e a saída.
 
@@ -26,26 +18,27 @@ O objetivo é comparar estratégias de exploração e compreender a diferença e
 
 É possível executar um algoritmo individualmente ou comparar todas as opções em sequência no mesmo mapa. Ao final do modo comparativo, um ranking apresenta custo, tempo da busca animada, tamanho do caminho e nós expandidos.
 
-## Algoritmos
+O projeto possui **quatro algoritmos** e **seis opções de execução**, pois o A* pode ser utilizado com três heurísticas diferentes:
 
 - **BFS (Busca em Largura):** explora por níveis, usando uma fila. Encontra um caminho com o menor número de movimentos, mas não considera os custos dos terrenos.
 - **DFS (Busca em Profundidade):** explora um ramo antes de voltar às alternativas, usando uma pilha. Encontra uma rota, sem garantir menor comprimento ou custo.
 - **Dijkstra:** prioriza o menor custo acumulado, usando uma fila de prioridade. Encontra uma rota de custo mínimo nos terrenos do projeto.
-- **A* (com diferentes heurísticas):** combina custo acumulado e estimativa do custo restante para orientar a exploração até o destino.
+- **A* (com diferentes heurísticas):** combina custo acumulado e estimativa do custo restante para orientar a exploração até o destino, com as heurísticas Manhattan, Euclidiana e Chebyshev.
 
-### Heurísticas do A*
+### Modelagem em grafos
 
-O projeto possui **quatro algoritmos** e **seis opções de execução**, pois A* pode ser utilizado com três heurísticas:
+Cada célula livre representa um vértice. Células adjacentes se conectam por movimentos horizontais e verticais, sem diagonais. Paredes bloqueiam a passagem. O peso de um movimento corresponde ao custo de entrar na próxima célula.
 
-| Heurística | Cálculo, com `dx` e `dy` como diferenças absolutas até o destino |
-|---|---|
-| Manhattan | `dx + dy` |
-| Euclidiana | `sqrt(dx² + dy²)` |
-| Chebyshev | `max(dx, dy)` |
+| Elemento | Valor na grade | Efeito |
+|---|---:|---|
+| Parede | 0 | Bloqueia a passagem |
+| Terreno plano | 1 | Menor custo |
+| Lama | 3 | Custo intermediário |
+| Água | 5 | Maior custo |
 
-Essas estimativas não superestimam o custo restante em uma grade com movimentos em quatro direções e custo mínimo de terreno igual a 1. Assim, as variantes utilizadas pelo projeto preservam a busca por um caminho de custo mínimo. Manhattan representa a distância mínima em movimentos sem obstáculos, não o custo exato de uma rota com paredes e terrenos variados.
+O custo do caminho soma os valores das células percorridas, excluindo a célula inicial. A configuração padrão utiliza **40 colunas e 26 linhas**, início em `(0, 0)`, destino em `(39, 25)` e semente `42`. Todas as buscas de uma sessão usam o mesmo mapa.
 
-## Capturas de tela
+## Screenshots
 
 <table>
   <tr>
@@ -62,37 +55,12 @@ Essas estimativas não superestimam o custo restante em uma grade com movimentos
   </tr>
 </table>
 
-## Funcionalidades
+## Instalação
 
-- Geração de labirintos com paredes e terrenos de custos variados.
-- Verificação de conectividade para garantir uma rota entre início e destino no mapa gerado.
-- Animação dos nós visitados, da fronteira e da revelação do caminho encontrado.
-- Execução individual ou sequencial das seis opções do menu.
-- Comparação dos resultados no mesmo labirinto.
-- Painel de métricas durante a execução e ranking ao final do modo comparativo.
-- Configuração de tamanho da grade, semente e velocidade de animação pelo código.
+Linguagem: Python 3.10 ou superior<br>
+Framework: Pygame Community Edition (`pygame-ce`), declarado em [requirements.txt](requirements.txt) e importado como `pygame`<br>
 
-## Modelagem em grafos
-
-Cada célula livre representa um vértice. Células adjacentes se conectam por movimentos horizontais e verticais, sem diagonais. Paredes bloqueiam a passagem. O peso de um movimento corresponde ao custo de entrar na próxima célula.
-
-| Elemento | Valor na grade | Efeito |
-|---|---:|---|
-| Parede | 0 | Bloqueia a passagem |
-| Terreno plano | 1 | Menor custo |
-| Lama | 3 | Custo intermediário |
-| Água | 5 | Maior custo |
-
-O custo do caminho soma os valores das células percorridas, excluindo a célula inicial. A configuração padrão utiliza **40 colunas e 26 linhas**, início em `(0, 0)`, destino em `(39, 25)` e semente `42`. Todas as buscas de uma sessão usam o mesmo mapa.
-
-## Tecnologias e requisitos
-
-- **Python 3.10 ou superior**, devido à sintaxe de anotações de tipos utilizada no código.
-- **Pygame Community Edition (`pygame-ce`)**, declarado em [requirements.txt](requirements.txt) e importado como `pygame`.
-- Ambiente desktop com suporte a janela gráfica.
-- Fontes **IBM Plex Mono**, incluídas em `assets/fonts/`, com licença em [OFL.txt](assets/fonts/OFL.txt).
-
-## Instalação e execução
+Pré-requisitos: ambiente desktop com suporte a janela gráfica. As fontes **IBM Plex Mono** já estão incluídas em `assets/fonts/`, com licença em [OFL.txt](assets/fonts/OFL.txt).
 
 Clone o projeto e entre na pasta:
 
@@ -121,7 +89,7 @@ python3 -m venv .venv
 
 Execute a partir da raiz do projeto e mantenha a pasta `assets/fonts/` junto ao código.
 
-## Uso e controles
+## Uso
 
 1. Abra o programa para acessar o menu de algoritmos.
 2. Escolha uma busca pelas teclas numéricas ou pressione **T** para comparar todas.
@@ -141,7 +109,7 @@ Execute a partir da raiz do projeto e mantenha a pasta `assets/fonts/` junto ao 
 | **Enter** | Voltar ao menu após uma execução individual ou no ranking |
 | **Esc** | Encerrar a aplicação |
 
-## Métricas e ranking
+### Métricas e ranking
 
 | Métrica | Significado na implementação |
 |---|---|
@@ -154,7 +122,19 @@ O ranking ordena por **menor custo**, depois por **menor tempo**, **menor tamanh
 
 > O tempo exibido inclui a animação e depende dos frames e do computador. Não é uma medição isolada da velocidade de processamento dos algoritmos. BFS pode encontrar menos movimentos e, ainda assim, apresentar custo maior que Dijkstra ou A*.
 
-## Configuração
+## Outros
+
+### Heurísticas do A*
+
+| Heurística | Cálculo, com `dx` e `dy` como diferenças absolutas até o destino |
+|---|---|
+| Manhattan | `dx + dy` |
+| Euclidiana | `sqrt(dx² + dy²)` |
+| Chebyshev | `max(dx, dy)` |
+
+Essas estimativas não superestimam o custo restante em uma grade com movimentos em quatro direções e custo mínimo de terreno igual a 1. Assim, as variantes utilizadas pelo projeto preservam a busca por um caminho de custo mínimo. Manhattan representa a distância mínima em movimentos sem obstáculos, não o custo exato de uma rota com paredes e terrenos variados.
+
+### Configuração
 
 Os parâmetros ficam em [maze_runner/config.py](maze_runner/config.py):
 
@@ -171,7 +151,7 @@ Os parâmetros ficam em [maze_runner/config.py](maze_runner/config.py):
 
 Para experimentar outro mapa, altere `MAZE_SEED` e reinicie o programa. Os custos e pesos de sorteio dos terrenos ficam em [maze_runner/grid.py](maze_runner/grid.py).
 
-## Estrutura do projeto
+### Estrutura do projeto
 
 ```text
 G23_Grafos_PA-26.2/
@@ -201,6 +181,6 @@ G23_Grafos_PA-26.2/
         └── fonts.py        # Carregamento das fontes
 ```
 
-## 🎥 Apresentação do Projeto
+### 🎥 Apresentação do Projeto
 
 [![Apresentação do Projeto](https://img.youtube.com/vi/p9Ocs_O742g/maxresdefault.jpg)](https://youtu.be/p9Ocs_O742g)
